@@ -1,0 +1,39 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"name": "Run Extension (Host A)",
+		"type": "extensionHost",
+		"request": "launch",
+		"runtimeExecutable": "${execPath}",
+		"args": [
+		  "--new-window",
+		  "--extensionDevelopmentPath=${workspaceFolder}",
+		  "--user-data-dir=${workspaceFolder}/.devhostA",
+		  "--extensions-dir=${workspaceFolder}/.devhostA-extensions"
+		],
+		"outFiles": ["${workspaceFolder}/out/**/*.js"]
+	  },
+	  {
+		"name": "Run Extension (Host B)",
+		"type": "extensionHost",
+		"request": "launch",
+		"runtimeExecutable": "${execPath}",
+		"args": [
+		  "--new-window",
+		  "--extensionDevelopmentPath=${workspaceFolder}",
+		  "--user-data-dir=${workspaceFolder}/.devhostB",
+		  "--extensions-dir=${workspaceFolder}/.devhostB-extensions"
+		],
+		"outFiles": ["${workspaceFolder}/out/**/*.js"],
+		"noDebug": true
+	  }
+	],
+	"compounds": [
+	  {
+		"name": "Run Both Hosts",
+		"configurations": ["Run Extension (Host A)", "Run Extension (Host B)"]
+	  }
+	]
+  }
+   

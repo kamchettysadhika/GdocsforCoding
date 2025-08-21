@@ -1,0 +1,379 @@
+{
+     "name": "live-share-enhanced",
+    "displayName": "Live Share Enhanced",
+    "description": "Enhanced real-time collaboration for VS Code",
+    "publisher": "sadhikakamchetty",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.74 .0"
+    },
+    "categories": [
+        "Other",
+        "Extension Packs"
+    ],
+    "keywords": [
+        "collaboration",
+        "live-share",
+        "real-time",
+        "pair-programming",
+        "team"
+    ],
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "liveshare.startSession",
+                "title": "Start Live Share Session",
+                "category": "Live Share",
+                "icon": "$(live-share)"
+            },
+            {
+                "command": "liveshare.joinSession",
+                "title": "Join Live Share Session",
+                "category": "Live Share",
+                "icon": "$(person-add)"
+            },
+            {
+                "command": "liveshare.endSession",
+                "title": "End Live Share Session",
+                "category": "Live Share",
+                "icon": "$(close)"
+            },
+            {
+                "command": "liveshare.shareFile",
+                "title": "Share Current File",
+                "category": "Live Share",
+                "icon": "$(share)"
+            },
+            {
+                "command": "liveshare.unshareFile",
+                "title": "Unshare Current File",
+                "category": "Live Share",
+                "icon": "$(close)"
+            },
+            {
+                "command": "liveshare.openChat",
+                "title": "Open Chat",
+                "category": "Live Share",
+                "icon": "$(comment-discussion)"
+            },
+            {
+                "command": "liveshare.showPresence",
+                "title": "Show Participants",
+                "category": "Live Share",
+                "icon": "$(account)"
+            },
+            {
+                "command": "liveshare.followUser",
+                "title": "Follow User",
+                "category": "Live Share",
+                "icon": "$(eye)"
+            },
+            {
+                "command": "liveshare.stopFollowing",
+                "title": "Stop Following",
+                "category": "Live Share",
+                "icon": "$(eye-closed)"
+            },
+            {
+                "command": "liveshare.shareSelection",
+                "title": "Share Selection in Chat",
+                "category": "Live Share",
+                "icon": "$(selection)"
+            },
+            {
+                "command": "liveshare.executeCode",
+                "title": "Execute Shared Code",
+                "category": "Live Share",
+                "icon": "$(play)"
+            },
+            {
+                "command": "liveshare.shareServer",
+                "title": "Share Local Server",
+                "category": "Live Share",
+                "icon": "$(server)"
+            },
+            {
+                "command": "liveshare.shareTerminal",
+                "title": "Share Terminal",
+                "category": "Live Share",
+                "icon": "$(terminal)"
+            },
+            {
+                "command": "liveshare.exportSession",
+                "title": "Export Session Data",
+                "category": "Live Share",
+                "icon": "$(export)"
+            },
+            {
+                "command": "liveshare.showSettings",
+                "title": "Live Share Settings",
+                "category": "Live Share",
+                "icon": "$(settings)"
+            },
+            {
+                "command": "liveshare.toggleReadOnly",
+                "title": "Toggle Read-Only Mode",
+                "category": "Live Share",
+                "icon": "$(lock)"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "liveshare.startSession"
+                },
+                {
+                    "command": "liveshare.joinSession"
+                },
+                {
+                    "command": "liveshare.endSession",
+                    "when": "liveshare.sessionActive"
+                },
+                {
+                    "command": "liveshare.shareFile",
+                    "when": "liveshare.sessionActive && editorIsOpen"
+                },
+                {
+                    "command": "liveshare.unshareFile",
+                    "when": "liveshare.sessionActive && editorIsOpen"
+                },
+                {
+                    "command": "liveshare.openChat",
+                    "when": "liveshare.sessionActive"
+                },
+                {
+                    "command": "liveshare.showPresence",
+                    "when": "liveshare.sessionActive"
+                },
+                {
+                    "command": "liveshare.followUser",
+                    "when": "liveshare.sessionActive"
+                },
+                {
+                    "command": "liveshare.stopFollowing",
+                    "when": "liveshare.sessionActive && liveshare.following"
+                },
+                {
+                    "command": "liveshare.shareSelection",
+                    "when": "liveshare.sessionActive && editorHasSelection"
+                },
+                {
+                    "command": "liveshare.executeCode",
+                    "when": "liveshare.sessionActive && editorIsOpen"
+                },
+                {
+                    "command": "liveshare.shareServer",
+                    "when": "liveshare.sessionActive"
+                },
+                {
+                    "command": "liveshare.shareTerminal",
+                    "when": "liveshare.sessionActive"
+                },
+                {
+                    "command": "liveshare.exportSession",
+                    "when": "liveshare.sessionActive"
+                },
+                {
+                    "command": "liveshare.showSettings"
+                },
+                {
+                    "command": "liveshare.toggleReadOnly",
+                    "when": "liveshare.sessionActive && liveshare.isHost"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "liveshare.shareFile",
+                    "when": "liveshare.sessionActive",
+                    "group": "liveshare@1"
+                },
+                {
+                    "command": "liveshare.shareSelection",
+                    "when": "liveshare.sessionActive && editorHasSelection",
+                    "group": "liveshare@2"
+                },
+                {
+                    "command": "liveshare.executeCode",
+                    "when": "liveshare.sessionActive",
+                    "group": "liveshare@3"
+                }
+            ],
+            "editor/title": [
+                {
+                    "command": "liveshare.shareFile",
+                    "when": "liveshare.sessionActive",
+                    "group": "navigation@1"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "liveshare.openChat",
+                    "when": "view == liveshare.participants",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "liveshare.showSettings",
+                    "when": "view == liveshare.participants",
+                    "group": "navigation@2"
+                }
+            ]
+        },
+        "views": {
+            "explorer": [
+                {
+                    "id": "liveshare.participants",
+                    "name": "Live Share",
+                    "when": "liveshare.sessionActive",
+                    "contextualTitle": "Live Share Participants"
+                }
+            ]
+        },
+        "viewsWelcome": [
+            {
+                "view": "liveshare.participants",
+                "contents": "No active Live Share session.\n[Start Session](command:liveshare.startSession)\n[Join Session](command:liveshare.joinSession)"
+            }
+        ],
+        "configuration": {
+            "title": "Live Share Enhanced",
+            "properties": {
+                "liveshare.username": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Your display name in Live Share sessions"
+                },
+                "liveshare.serverUrl": {
+                    "type": "string",
+                    "default": "ws://localhost:8000",
+                    "description": "Live Share collaboration server URL"
+                },
+                "liveshare.autoFollow": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Automatically follow new participants when they join"
+                },
+                "liveshare.cursorAnimations": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show animated cursors for other participants"
+                },
+                "liveshare.autoShareFiles": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Automatically share files when switching between them"
+                },
+                "liveshare.requireApproval": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Require approval before sharing files with participants"
+                },
+                "liveshare.readOnlyGuests": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Prevent non-host participants from editing files"
+                },
+                "liveshare.enableLogging": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Keep detailed logs of session activities"
+                },
+                "liveshare.maxReconnectAttempts": {
+                    "type": "number",
+                    "default": 5,
+                    "minimum": 0,
+                    "maximum": 10,
+                    "description": "Number of times to attempt reconnection on disconnect"
+                },
+                "liveshare.operationSyncDelay": {
+                    "type": "number",
+                    "default": 50,
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "description": "Delay between document operations to prevent conflicts (ms)"
+                },
+                "liveshare.maxSessionDuration": {
+                    "type": "number",
+                    "default": 8,
+                    "minimum": 0,
+                    "maximum": 24,
+                    "description": "Maximum session duration in hours (0 = unlimited)"
+                },
+                "liveshare.showNotifications": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show notifications for Live Share events"
+                }
+            }
+        },
+        "keybindings": [
+            {
+                "command": "liveshare.startSession",
+                "key": "ctrl+shift+l ctrl+shift+s",
+                "mac": "cmd+shift+l cmd+shift+s"
+            },
+            {
+                "command": "liveshare.joinSession",
+                "key": "ctrl+shift+l ctrl+shift+j",
+                "mac": "cmd+shift+l cmd+shift+j"
+            },
+            {
+                "command": "liveshare.openChat",
+                "key": "ctrl+shift+l ctrl+shift+c",
+                "mac": "cmd+shift+l cmd+shift+c",
+                "when": "liveshare.sessionActive"
+            },
+            {
+                "command": "liveshare.shareFile",
+                "key": "ctrl+shift+l ctrl+shift+f",
+                "mac": "cmd+shift+l cmd+shift+f",
+                "when": "liveshare.sessionActive && editorIsOpen"
+            },
+            {
+                "command": "liveshare.followUser",
+                "key": "ctrl+shift+l ctrl+shift+u",
+                "mac": "cmd+shift+l cmd+shift+u",
+                "when": "liveshare.sessionActive"
+            }
+        ]
+    },
+    "files": [
+    "out/**/*",
+    "node_modules/**/*"
+  ],
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/node": "16.x",
+        "@types/uuid": "^9.0.8",
+        "@types/vscode": "^1.74.0",
+        "@types/ws": "^8.5.4",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
+        "@vscode/vsce": "^3.6.0",
+        "eslint": "^8.28.0",
+        "typescript": "^4.9.4"
+    },
+    "dependencies": {
+        "uuid": "^9.0.1",
+        "ws": "^8.13.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-username/live-share-enhanced.git"
+    },
+    "bugs": {
+        "url": "https://github.com/your-username/live-share-enhanced/issues"
+    },
+    "homepage": "https://github.com/your-username/live-share-enhanced#readme",
+    "license": "MIT"
+}
