@@ -43,6 +43,3 @@ Configure through VS Code settings:
 
 Install from the VS Code Extension Marketplace or package locally with `vsce package`.
 
-## License
-
-MIT
